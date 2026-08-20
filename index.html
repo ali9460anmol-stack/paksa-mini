@@ -1,4 +1,312 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAKSA Mini</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #111827;
+    }
+
+    .app {
+      max-width: 480px;
+      min-height: 100vh;
+      margin: auto;
+      padding: 24px 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      margin-top: 40px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      margin: 14px 0 7px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 16px;
+      border: 0;
+      border-radius: 10px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    button.secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .message {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f3f4f6;
+      display: none;
+    }
+
+    .dashboard {
+      display: none;
+    }
+
+    .balance {
+      background: #111827;
+      color: white;
+      border-radius: 18px;
+      padding: 24px;
+      margin-top: 20px;
+    }
+
+    .balance small {
+      opacity: 0.75;
+    }
+
+    .balance strong {
+      display: block;
+      font-size: 32px;
+      margin-top: 8px;
+    }
+
+    .section {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- AUTH SCREEN -->
+  <div id="authScreen" class="card">
+
+    <h1>PAKSA Mini</h1>
+    <div class="subtitle">Real Usable Platform</div>
+
+    <label>Email</label>
+    <input id="email" type="email" placeholder="Enter your email">
+
+    <label>Password</label>
+    <input id="password" type="password" placeholder="Enter your password">
+
+    <button onclick="signIn()">Login</button>
+    <button class="secondary" onclick="signUp()">Create Account</button>
+
+    <div id="message" class="message"></div>
+
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="dashboard">
+
+    <div class="card">
+      <h1>Welcome to PAKSA</h1>
+      <div class="subtitle">Your personal dashboard</div>
+
+      <div class="balance">
+        <small>Wallet Balance</small>
+        <strong>$0.00</strong>
+      </div>
+
+      <div class="section">
+        <h3>Transaction History</h3>
+        <p>No transactions yet.</p>
+      </div>
+
+      <button class="secondary" onclick="signOut()">Logout</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script type="module">
+
+  import { createClient } from
+    "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+  /*
+    ==================================================
+    PAKSA MINI SUPABASE CONFIGURATION
+    ==================================================
+
+    اپنی Supabase values یہاں ڈالیں۔
+
+    SUPABASE_URL:
+    اپنے Supabase Project URL کو یہاں paste کریں۔
+
+    SUPABASE_PUBLISHABLE_KEY:
+    اپنی Supabase Publishable key یہاں paste کریں۔
+
+    Service Role / Secret key یہاں ہرگز نہ ڈالیں۔
+    ==================================================
+  */
+
+  const SUPABASE_URL = const SUPABASE_URL = "https://ceprbkpqooyddxajomke.supabase.co";;
+
+  const SUPABASE_PUBLISHABLE_KEY =
+    sb_publishable_xBjockBxUZBEPiD9vbuLlg_qLwgc9j_
+
+  const supabase = createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  const authScreen = document.getElementById("authScreen");
+  const dashboard = document.getElementById("dashboard");
+  const message = document.getElementById("message");
+
+  function showMessage(text) {
+    message.textContent = text;
+    message.style.display = "block";
+  }
+
+  window.signUp = async function () {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    if (!email || !password) {
+      showMessage("Please enter email and password.");
+      return;
+    }
+
+    if (password.length < 6) {
+      showMessage("Password must be at least 6 characters.");
+      return;
+    }
+
+    const { data, error } =
+      await supabase.auth.signUp({
+        email,
+        password
+      });
+
+    if (error) {
+      showMessage(error.message);
+      return;
+    }
+
+    showMessage("Account created successfully.");
+
+    if (data.session) {
+      showDashboard();
+    }
+  };
+
+  window.signIn = async function () {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    if (!email || !password) {
+      showMessage("Please enter email and password.");
+      return;
+    }
+
+    const { error } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    if (error) {
+      showMessage(error.message);
+      return;
+    }
+
+    showDashboard();
+  };
+
+  window.signOut = async function () {
+
+    await supabase.auth.signOut();
+
+    dashboard.style.display = "none";
+    authScreen.style.display = "block";
+  };
+
+  function showDashboard() {
+
+    authScreen.style.display = "none";
+    dashboard.style.display = "block";
+  }
+
+  async function checkSession() {
+
+    const { data } =
+      await supabase.auth.getSession();
+
+    if (data.session) {
+      showDashboard();
+    }
+  }
+
+  supabase.auth.onAuthStateChange(
+    (_event, session) => {
+
+      if (session) {
+        showDashboard();
+      } else {
+        dashboard.style.display = "none";
+        authScreen.style.display = "block";
+      }
+
+    }
+  );
+
+  checkSession();
+
+</script>
+
+</body>
+</html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
