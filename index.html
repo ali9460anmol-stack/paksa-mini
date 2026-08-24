@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,109 +6,173 @@
   <title>PAKSA Mini</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f5f7fa;
-      color: #111827;
+      background: #07110d;
+      color: #f5f5f5;
     }
 
     .app {
-      max-width: 480px;
+      width: min(480px, 100%);
       min-height: 100vh;
       margin: auto;
-      padding: 24px 18px;
+      padding: 20px 16px 40px;
     }
 
     .card {
-      background: white;
+      background: #101c17;
+      border: 1px solid #263d32;
+      border-radius: 20px;
+      padding: 22px;
+      margin-top: 20px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.30);
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      margin: 5px auto 15px;
       border-radius: 18px;
-      padding: 24px;
-      margin-top: 40px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      background: #d4af37;
+      color: #07110d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: 800;
     }
 
-    h1 {
-      margin: 0 0 8px;
-      text-align: center;
+    h1, h2, h3 { margin-top: 0; }
+
+    .center { text-align: center; }
+
+    .muted {
+      color: #aab7b0;
     }
 
-    .subtitle {
+    .demo {
       text-align: center;
-      color: #6b7280;
-      margin-bottom: 28px;
+      background: #392f0d;
+      color: #f3d978;
+      border: 1px solid #806b20;
+      border-radius: 10px;
+      padding: 9px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 15px;
     }
 
     label {
       display: block;
       margin: 14px 0 7px;
-      font-weight: 600;
+      font-weight: bold;
     }
 
-    input {
+    input, select {
       width: 100%;
-      padding: 14px;
-      border: 1px solid #d1d5db;
+      padding: 13px;
       border-radius: 10px;
+      border: 1px solid #344b40;
+      background: #07110d;
+      color: white;
       font-size: 16px;
     }
 
     button {
       width: 100%;
       padding: 14px;
-      margin-top: 16px;
+      margin-top: 13px;
       border: 0;
-      border-radius: 10px;
-      background: #111827;
-      color: white;
+      border-radius: 11px;
+      background: #d4af37;
+      color: #07110d;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 800;
+      cursor: pointer;
     }
 
     button.secondary {
-      background: #e5e7eb;
-      color: #111827;
+      background: #26382f;
+      color: white;
+    }
+
+    button.danger {
+      background: #542b2b;
+      color: white;
     }
 
     .message {
-      margin-top: 16px;
+      display: none;
+      margin-top: 15px;
       padding: 12px;
       border-radius: 10px;
-      background: #f3f4f6;
-      display: none;
+      background: #1d3027;
+      color: #d8e8df;
     }
 
-    .dashboard {
-      display: none;
-    }
+    .dashboard { display: none; }
 
     .balance {
-      background: #111827;
-      color: white;
+      background: linear-gradient(135deg, #172a21, #0c1511);
+      border: 1px solid #30483b;
       border-radius: 18px;
-      padding: 24px;
-      margin-top: 20px;
-    }
-
-    .balance small {
-      opacity: 0.75;
+      padding: 20px;
+      margin-top: 15px;
     }
 
     .balance strong {
       display: block;
       font-size: 32px;
       margin-top: 8px;
+      color: #f1d36a;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .mini {
+      background: #14231c;
+      border: 1px solid #294236;
+      border-radius: 14px;
+      padding: 15px;
+    }
+
+    .mini strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 20px;
     }
 
     .section {
-      background: white;
+      margin-top: 16px;
+      background: #101c17;
+      border: 1px solid #263d32;
       border-radius: 16px;
-      padding: 20px;
-      margin-top: 18px;
+      padding: 18px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid #24372e;
+    }
+
+    .row:last-child { border-bottom: 0; }
+
+    .hidden { display: none !important; }
+
+    .small {
+      font-size: 12px;
+      color: #91a29a;
     }
   </style>
 </head>
@@ -117,91 +181,225 @@
 
 <div class="app">
 
-  <!-- AUTH SCREEN -->
+  <div class="demo">
+    PAKSA — DEMO / TESTING ENVIRONMENT — NO REAL MONEY
+  </div>
+
+  <!-- AUTH -->
   <div id="authScreen" class="card">
 
-    <h1>PAKSA Mini</h1>
-    <div class="subtitle">Real Usable Platform</div>
+    <div class="logo">P</div>
+
+    <h1 class="center">PAKSA Mini</h1>
+    <p class="center muted">Secure account & wallet testing platform</p>
+
+    <div id="signupFields" class="hidden">
+      <label>Full Name</label>
+      <input id="fullName" type="text" placeholder="Full name">
+
+      <label>Username</label>
+      <input id="username" type="text" placeholder="Username">
+    </div>
 
     <label>Email</label>
-    <input id="email" type="email" placeholder="Enter your email">
+    <input id="email" type="email" placeholder="Email">
 
     <label>Password</label>
-    <input id="password" type="password" placeholder="Enter your password">
+    <input id="password" type="password" placeholder="Password">
 
-    <button onclick="signIn()">Login</button>
-    <button class="secondary" onclick="signUp()">Create Account</button>
+    <button id="loginBtn" onclick="signIn()">Login</button>
 
-    <div id="message" class="message"></div>
+    <button id="signupBtn" class="secondary" onclick="showSignup()">
+      Create Account
+    </button>
 
+    <button id="createBtn" class="hidden" onclick="signUp()">
+      Create PAKSA Account
+    </button>
+
+    <button id="backBtn" class="secondary hidden" onclick="showLogin()">
+      Back to Login
+    </button>
+
+    <button class="secondary" onclick="forgotPassword()">
+      Forgot Password
+    </button>
+
+    <div id="authMessage" class="message"></div>
   </div>
+
 
   <!-- DASHBOARD -->
   <div id="dashboard" class="dashboard">
 
     <div class="card">
-      <h1>Welcome to PAKSA</h1>
-      <div class="subtitle">Your personal dashboard</div>
+
+      <h2>Welcome to PAKSA</h2>
+      <p class="muted" id="welcomeText">Loading account...</p>
 
       <div class="balance">
-        <small>Wallet Balance</small>
-        <strong>$0.00</strong>
+        <span class="muted">Demo Portfolio Value</span>
+        <strong id="portfolioValue">$0.00</strong>
       </div>
 
-      <div class="section">
-        <h3>Transaction History</h3>
-        <p>No transactions yet.</p>
+      <div class="grid">
+
+        <div class="mini">
+          <span class="small">USDC DEMO</span>
+          <strong id="usdcBalance">0</strong>
+        </div>
+
+        <div class="mini">
+          <span class="small">PKSA DEMO</span>
+          <strong id="pksaBalance">0</strong>
+        </div>
+
       </div>
 
-      <button class="secondary" onclick="signOut()">Logout</button>
     </div>
+
+    <div class="section">
+      <h3>Account</h3>
+
+      <div class="row">
+        <span>Name</span>
+        <span id="profileName">—</span>
+      </div>
+
+      <div class="row">
+        <span>Username</span>
+        <span id="profileUsername">—</span>
+      </div>
+
+      <div class="row">
+        <span>Status</span>
+        <span id="profileStatus">—</span>
+      </div>
+
+      <div class="row">
+        <span>Role</span>
+        <span id="profileRole">—</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Transactions</h3>
+      <div id="transactions">
+        <p class="muted">Loading...</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Notifications</h3>
+      <div id="notifications">
+        <p class="muted">Loading...</p>
+      </div>
+    </div>
+
+    <button class="danger" onclick="signOut()">Logout</button>
 
   </div>
 
 </div>
+
 
 <script type="module">
 
   import { createClient } from
     "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
+
   /*
-    ==================================================
-    PAKSA MINI SUPABASE CONFIGURATION
-    ==================================================
+   =====================================================
+   PAKSA SUPABASE CONFIGURATION
 
-    اپنی Supabase values یہاں ڈالیں۔
+   Project URL:
+   https://ceprbkpqooyddxajomke.supabase.co
 
-    SUPABASE_URL:
-  "https://ceprbkpqooyddxajomke.supabase.co";
-
-    SUPABASE_PUBLISHABLE_KEY:
-    "sb_publishable_xBjockBxUZBEPiD9vbuLlg_qLwgc9j_ ";
-
-    Service Role / Secret key یہاں ہرگز نہ ڈالیں۔
-    ==================================================
+   IMPORTANT:
+   Use ONLY your Supabase Publishable/Anon key here.
+   NEVER use the Service Role / Secret key.
+   =====================================================
   */
 
-  const SUPABASE_URL = const SUPABASE_URL = "https://ceprbkpqooyddxajomke.supabase.co";;
+  const SUPABASE_URL =
+    "https://ceprbkpqooyddxajomke.supabase.co";
 
   const SUPABASE_PUBLISHABLE_KEY =
-    sb_publishable_xBjockBxUZBEPiD9vbuLlg_qLwgc9j_
+  "sb_publishable_xBjockBxUZBEPiD9vbuLlg_qLwgc9j_";
+
 
   const supabase = createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
 
-  const authScreen = document.getElementById("authScreen");
-  const dashboard = document.getElementById("dashboard");
-  const message = document.getElementById("message");
+
+  const authScreen =
+    document.getElementById("authScreen");
+
+  const dashboard =
+    document.getElementById("dashboard");
+
+  const authMessage =
+    document.getElementById("authMessage");
+
 
   function showMessage(text) {
-    message.textContent = text;
-    message.style.display = "block";
+    authMessage.textContent = text;
+    authMessage.style.display = "block";
   }
 
+
+  window.showSignup = function () {
+
+    document.getElementById("signupFields")
+      .classList.remove("hidden");
+
+    document.getElementById("loginBtn")
+      .classList.add("hidden");
+
+    document.getElementById("signupBtn")
+      .classList.add("hidden");
+
+    document.getElementById("createBtn")
+      .classList.remove("hidden");
+
+    document.getElementById("backBtn")
+      .classList.remove("hidden");
+
+    authMessage.style.display = "none";
+  };
+
+
+  window.showLogin = function () {
+
+    document.getElementById("signupFields")
+      .classList.add("hidden");
+
+    document.getElementById("loginBtn")
+      .classList.remove("hidden");
+
+    document.getElementById("signupBtn")
+      .classList.remove("hidden");
+
+    document.getElementById("createBtn")
+      .classList.add("hidden");
+
+    document.getElementById("backBtn")
+      .classList.add("hidden");
+
+    authMessage.style.display = "none";
+  };
+
+
   window.signUp = async function () {
+
+    const fullName =
+      document.getElementById("fullName").value.trim();
+
+    const username =
+      document.getElementById("username").value.trim();
 
     const email =
       document.getElementById("email").value.trim();
@@ -209,33 +407,55 @@
     const password =
       document.getElementById("password").value;
 
-    if (!email || !password) {
-      showMessage("Please enter email and password.");
+
+    if (!fullName || !username || !email || !password) {
+      showMessage("Please complete all fields.");
       return;
     }
+
 
     if (password.length < 6) {
       showMessage("Password must be at least 6 characters.");
       return;
     }
 
+
     const { data, error } =
       await supabase.auth.signUp({
+
         email,
-        password
+        password,
+
+        options: {
+          data: {
+            full_name: fullName,
+            username: username
+          }
+        }
+
       });
+
 
     if (error) {
       showMessage(error.message);
       return;
     }
 
-    showMessage("Account created successfully.");
 
     if (data.session) {
-      showDashboard();
+
+      showDashboard(data.session.user);
+
+    } else {
+
+      showMessage(
+        "Account created. Please complete email verification if required."
+      );
+
     }
+
   };
+
 
   window.signIn = async function () {
 
@@ -245,24 +465,63 @@
     const password =
       document.getElementById("password").value;
 
+
     if (!email || !password) {
       showMessage("Please enter email and password.");
       return;
     }
 
-    const { error } =
+
+    const { data, error } =
       await supabase.auth.signInWithPassword({
         email,
         password
       });
+
 
     if (error) {
       showMessage(error.message);
       return;
     }
 
-    showDashboard();
+
+    showDashboard(data.session.user);
+
   };
+
+
+  window.forgotPassword = async function () {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+
+    if (!email) {
+      showMessage(
+        "DEMO: Enter your email first. A password reset link would normally be sent."
+      );
+      return;
+    }
+
+
+    const { error } =
+      await supabase.auth.resetPasswordForEmail(email);
+
+
+    if (error) {
+      showMessage(
+        "DEMO: Password reset request could not be processed."
+      );
+      return;
+    }
+
+
+    showMessage(
+      "DEMO: If this were fully configured, a password reset email would be sent."
+    );
+
+  };
+
 
   window.signOut = async function () {
 
@@ -270,161 +529,250 @@
 
     dashboard.style.display = "none";
     authScreen.style.display = "block";
+
+    showLogin();
+
   };
 
-  function showDashboard() {
+
+  async function loadProfile(user) {
+
+    const { data, error } =
+      await supabase
+        .from("paksa_profiles")
+        .select("*")
+        .eq("id", user.id)
+        .maybeSingle();
+
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+
+    if (!data) {
+      document.getElementById("welcomeText").textContent =
+        "Account is being initialized...";
+      return;
+    }
+
+
+    document.getElementById("welcomeText").textContent =
+      "Welcome, " + (data.full_name || user.email);
+
+    document.getElementById("profileName").textContent =
+      data.full_name || "—";
+
+    document.getElementById("profileUsername").textContent =
+      data.username || "—";
+
+    document.getElementById("profileStatus").textContent =
+      data.status || "—";
+
+    document.getElementById("profileRole").textContent =
+      data.role || "user";
+
+  }
+
+
+  async function loadBalances(user) {
+
+    const { data: wallet } =
+      await supabase
+        .from("paksa_wallets")
+        .select("id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+
+    if (!wallet) {
+      return;
+    }
+
+
+    const { data: balances } =
+      await supabase
+        .from("paksa_balances")
+        .select("asset,balance")
+        .eq("wallet_id", wallet.id);
+
+
+    let usdc = 0;
+    let pksa = 0;
+
+
+    (balances || []).forEach(item => {
+
+      if (item.asset === "USDC") {
+        usdc = Number(item.balance || 0);
+      }
+
+      if (item.asset === "PKSA") {
+        pksa = Number(item.balance || 0);
+      }
+
+    });
+
+
+    document.getElementById("usdcBalance").textContent =
+      usdc.toFixed(2);
+
+    document.getElementById("pksaBalance").textContent =
+      pksa.toFixed(4);
+
+
+    /*
+      PAKSA value below is only a TEST/REFERENCE display.
+      It is NOT a guaranteed market price.
+    */
+
+    const portfolio =
+      usdc + (pksa * 50);
+
+    document.getElementById("portfolioValue").textContent =
+      "$" + portfolio.toFixed(2);
+
+  }
+
+
+  async function loadTransactions(user) {
+
+    const container =
+      document.getElementById("transactions");
+
+
+    const { data, error } =
+      await supabase
+        .from("paksa_transactions")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(10);
+
+
+    if (error) {
+      container.innerHTML =
+        "<p class='muted'>Unable to load transactions.</p>";
+      return;
+    }
+
+
+    if (!data || data.length === 0) {
+      container.innerHTML =
+        "<p class='muted'>No transactions yet.</p>";
+      return;
+    }
+
+
+    container.innerHTML =
+      data.map(tx => `
+        <div class="row">
+          <span>
+            ${tx.transaction_type}<br>
+            <span class="small">${tx.asset}</span>
+          </span>
+          <span>
+            ${Number(tx.amount).toFixed(4)}<br>
+            <span class="small">${tx.status}</span>
+          </span>
+        </div>
+      `).join("");
+
+  }
+
+
+  async function loadNotifications(user) {
+
+    const container =
+      document.getElementById("notifications");
+
+
+    const { data, error } =
+      await supabase
+        .from("paksa_notifications")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(10);
+
+
+    if (error) {
+      container.innerHTML =
+        "<p class='muted'>Unable to load notifications.</p>";
+      return;
+    }
+
+
+    if (!data || data.length === 0) {
+      container.innerHTML =
+        "<p class='muted'>No notifications.</p>";
+      return;
+    }
+
+
+    container.innerHTML =
+      data.map(n => `
+        <div class="row">
+          <span>
+            <strong>${n.title}</strong><br>
+            <span class="small">${n.message}</span>
+          </span>
+        </div>
+      `).join("");
+
+  }
+
+
+  async function showDashboard(user) {
 
     authScreen.style.display = "none";
     dashboard.style.display = "block";
+
+
+    await loadProfile(user);
+    await loadBalances(user);
+    await loadTransactions(user);
+    await loadNotifications(user);
+
   }
+
 
   async function checkSession() {
 
     const { data } =
       await supabase.auth.getSession();
 
+
     if (data.session) {
-      showDashboard();
+
+      showDashboard(data.session.user);
+
     }
+
   }
+
 
   supabase.auth.onAuthStateChange(
     (_event, session) => {
 
       if (session) {
-        showDashboard();
+
+        showDashboard(session.user);
+
       } else {
+
         dashboard.style.display = "none";
         authScreen.style.display = "block";
+
       }
 
     }
   );
 
+
   checkSession();
 
-</script>
-
-</body>
-</html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PAKSA Mini</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b0f19;
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .app {
-      width: min(420px, 92%);
-      background: #121827;
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 15px 50px rgba(0,0,0,.45);
-      text-align: center;
-    }
-    .logo {
-      width: 76px;
-      height: 76px;
-      margin: 0 auto 18px;
-      border-radius: 20px;
-      background: #d4af37;
-      color: #0b0f19;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      font-weight: bold;
-    }
-    h1 { margin: 8px 0; }
-    p { color: #aeb6c7; }
-    input, button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 12px;
-      border-radius: 12px;
-      font-size: 16px;
-    }
-    input {
-      border: 1px solid #30394d;
-      background: #0b0f19;
-      color: white;
-    }
-    button {
-      border: 0;
-      background: #d4af37;
-      color: #0b0f19;
-      font-weight: bold;
-    }
-    .dashboard { display: none; }
-    .balance {
-      font-size: 34px;
-      font-weight: bold;
-      margin: 24px 0;
-    }
-    .logout {
-      background: #30394d;
-      color: white;
-    }
-  </style>
-</head>
-<body>
-
-<div class="app">
-
-  <div id="login">
-    <div class="logo">P</div>
-    <h1>PAKSA Mini</h1>
-    <p>Real Usable Platform</p>
-
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
-
-    <button onclick="login()">Login</button>
-  </div>
-
-  <div id="dashboard" class="dashboard">
-    <div class="logo">P</div>
-    <h1>Welcome to PAKSA</h1>
-    <p>Your personal dashboard</p>
-
-    <div class="balance">$0.00</div>
-
-    <p>Wallet Balance</p>
-    <p>Transaction History</p>
-
-    <button class="logout" onclick="logout()">Logout</button>
-  </div>
-
-</div>
-
-<script>
-function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (!email || !password) {
-    alert("Please enter your email and password.");
-    return;
-  }
-
-  document.getElementById("login").style.display = "none";
-  document.getElementById("dashboard").style.display = "block";
-}
-
-function logout() {
-  document.getElementById("dashboard").style.display = "none";
-  document.getElementById("login").style.display = "block";
-}
 </script>
 
 </body>
